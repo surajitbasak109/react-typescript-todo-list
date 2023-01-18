@@ -22,6 +22,12 @@ export type TProps = {
   children: React.ReactNode;
 };
 
+export interface TodoListProp {
+  todos: ITodo[];
+  searchKeyword: string;
+  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
+}
+
 export interface SearchBarProp {
   searchKeyword: string;
   onChange: React.Dispatch<React.SetStateAction<string>>;

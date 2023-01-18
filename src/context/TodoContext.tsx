@@ -15,25 +15,17 @@ export const TodoProvider: React.FC<TProps> = ({ children }) => {
   const [error, setError] = useState<string | null>(null);
 
   const addTodo = async (title: string) => {
-    try {
-      setIsLoading(true);
-      const { data } = await axios.post(
-        'https://jsonplaceholder.typicode.com/todos',
-        {
-          title,
-          completed: false,
-        }
-      );
-      setTodos([...todos, { ...data, id: new Date().getTime() }]);
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        setError(error.response?.data);
-      } else {
-        setError(String(error));
-      }
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(true);
+    wait(WAITING_TIME)
+      .then(() => {
+        setTodos([
+          ...todos,
+          { title, userId: 1, completed: false, id: new Date().getTime() },
+        ]);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const updateTitle = (id: number, title: string) => {

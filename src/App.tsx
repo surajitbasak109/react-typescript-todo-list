@@ -5,6 +5,7 @@ import { TTodoContextType } from './@types/todo';
 import { TodoContext } from './context/TodoContext';
 import Todo from './components/Todo';
 import SearchBar from './components/SearchBar';
+import TodoList from './components/TodoList';
 
 const App = () => {
   const { todos, isLoading, error, setError, addTodo } = useContext(
@@ -62,19 +63,13 @@ const App = () => {
         )}
 
         {!isLoading && todos && (
-          <div>
-            <SearchBar
-              searchKeyword={searchKeyword}
-              onChange={setSearchKeyword}
-            />
-            {todos
-              .filter(({ title }) =>
-                title.toLowerCase().includes(searchKeyword.toLowerCase())
-              )
-              .map((todo) => (
-                <Todo key={todo.id} {...todo} />
-              ))}
-          </div>
+          <TodoList
+            todos={todos.filter(({ title }) =>
+              title.toLowerCase().includes(searchKeyword.toLowerCase())
+            )}
+            searchKeyword={searchKeyword}
+            setSearchKeyword={setSearchKeyword}
+          />
         )}
       </div>
     </div>
