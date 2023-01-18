@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ITodo, TodoListProp } from '../@types/todo';
+import { TodoListProp } from '../@types/todo';
 import SearchBar from './SearchBar';
 import Todo from './Todo';
 
