@@ -1,4 +1,4 @@
-import { useContext, useState, SyntheticEvent } from 'react';
+import { useContext, useState, SyntheticEvent, useRef } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 
 import { TTodoContextType } from './@types/todo';
@@ -13,6 +13,7 @@ const App = () => {
 
   const [title, setTitle] = useState('');
   const [searchKeyword, setSearchKeyword] = useState('');
+  const titleInputRef = useRef<HTMLInputElement>(null);
 
   const onSubmitHandler = (event: SyntheticEvent) => {
     setError(null);
@@ -25,15 +26,21 @@ const App = () => {
 
     addTodo(title);
     setTitle('');
+
+    titleInputRef.current?.focus();
   };
 
   return (
     <div className="flex items-center justify-center w-screen h-screen font-sans bg-teal-500">
-      <div className="w-full p-6 m-4 bg-white rounded shadow lg:w-5/6">
+      <div
+        id="custom-scrollbar"
+        className="w-5/6 p-6 m-4 overflow-y-auto bg-white rounded shadow h-5/6"
+      >
         <form onSubmit={onSubmitHandler} className="mb-4">
           <h1 className="text-3xl font-bold text-grey-darkest">Todo List</h1>
           <div className="flex mt-4">
             <input
+              ref={titleInputRef}
               value={title}
               className="w-full px-3 py-2 mr-4 border border-purple-300 rounded shadow outline-none appearance-none focus:border-purple-500 text-grey-darker"
               placeholder="Add Todo"
